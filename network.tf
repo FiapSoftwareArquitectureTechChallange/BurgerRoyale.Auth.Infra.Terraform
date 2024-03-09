@@ -141,9 +141,9 @@ resource "aws_default_security_group" "burgerroyale_auth_default_security_group"
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "burgerroyale_auth_default_security_group" {
-  security_group_id = aws_vpc.burgerroyale_auth_vpc.default_security_group_id
+# resource "aws_vpc_security_group_ingress_rule" "burgerroyale_auth_default_security_group" {
+#   security_group_id = aws_vpc.burgerroyale_auth_vpc.default_security_group_id
 
-  cidr_ipv4   = var.myIP
-  ip_protocol = "-1"
-}
+#   cidr_ipv4   = var.myIp
+#   ip_protocol = "-1"
+# }

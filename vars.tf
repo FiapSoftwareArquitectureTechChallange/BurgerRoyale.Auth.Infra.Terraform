@@ -6,8 +6,12 @@ variable "regionDefault" {
   default = "us-east-1"
 }
 
-variable "myIP" {
-  default = ""
+# variable "myIp" {
+#   description = "Inform your IP address"
+# }
+
+variable "dbName" {
+  default = "BurgerRoyaleAuthDb"
 }
 
 variable "dbUserName" {
@@ -16,4 +20,20 @@ variable "dbUserName" {
 
 variable "dbPassword" {
   description = "Inform database password"
+}
+
+variable "jwtIssuer" {
+  description = "Inform JWT issuer"
+}
+
+variable "jwtAudience" {
+  description = "Inform JWT audience"
+}
+
+variable "jwtSecret" {
+  description = "Inform JWT secret"
+}
+
+variable "functionName" {
+  default = "burgerroyaleauth-lambda"
 }
