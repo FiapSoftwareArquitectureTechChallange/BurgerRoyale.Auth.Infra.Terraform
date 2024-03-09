@@ -4,7 +4,7 @@ resource "aws_vpc" "burgerroyale_auth_vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   tags = {
-    Name = "burgerroyale_auth_vpc"
+    Name = "${var.projectName}_vpc"
   }
 }
 
@@ -14,9 +14,8 @@ resource "aws_subnet" "burgerroyale_auth_public_subnet_1" {
   vpc_id            = aws_vpc.burgerroyale_auth_vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
-
   tags = {
-    Name = "burgerroyale_auth_public_subnet_1"
+    Name = "${var.projectName}_public_subnet_1"
   }
 }
 
@@ -26,7 +25,7 @@ resource "aws_subnet" "burgerroyale_auth_public_subnet_2" {
   availability_zone = "us-east-1b"
 
   tags = {
-    Name = "burgerroyale_auth_public_subnet_2"
+    Name = "${var.projectName}_public_subnet_2"
   }
 }
 
@@ -38,7 +37,7 @@ resource "aws_subnet" "burgerroyale_auth_private_subnet_1" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "burgerroyale_auth_private_subnet_1"
+    Name = "${var.projectName}_private_subnet_1"
   }
 }
 
@@ -48,7 +47,7 @@ resource "aws_subnet" "burgerroyale_auth_private_subnet_2" {
   availability_zone = "us-east-1b"
 
   tags = {
-    Name = "burgerroyale_auth_private_subnet_2"
+    Name = "${var.projectName}_private_subnet_2"
   }
 }
 
@@ -57,7 +56,7 @@ resource "aws_subnet" "burgerroyale_auth_private_subnet_2" {
 resource "aws_internet_gateway" "burgerroyale_auth_internet_gateway" {
   vpc_id = aws_vpc.burgerroyale_auth_vpc.id
   tags = {
-    Name = "burgerroyale_auth_internet_gateway"
+    Name = "${var.projectName}_internet_gateway"
   }
 }
 
@@ -65,7 +64,7 @@ resource "aws_internet_gateway" "burgerroyale_auth_internet_gateway" {
 
 resource "aws_eip" "burgerroyale_auth_elastic_ip" {
   tags = {
-    Name = "burgerroyale_auth_elastic_ip"
+    Name = "${var.projectName}_elastic_ip"
   }
 }
 
@@ -73,7 +72,7 @@ resource "aws_nat_gateway" "burgerroyale_auth_nat_gateway" {
   subnet_id     = aws_subnet.burgerroyale_auth_public_subnet_1.id
   allocation_id = aws_eip.burgerroyale_auth_elastic_ip.id
   tags = {
-    Name = "burgerroyale_auth_nat_gateway"
+    Name = "${var.projectName}_nat_gateway"
   }
 }
 
@@ -88,7 +87,7 @@ resource "aws_default_route_table" "burgerroyale_auth_main_route_table" {
   }
 
   tags = {
-    Name = "burgerroyale_auth_main_route_table"
+    Name = "${var.projectName}_main_route_table"
   }
 }
 
@@ -103,7 +102,7 @@ resource "aws_route_table" "burgerroyale_auth_public_route_table" {
   }
 
   tags = {
-    Name = "burgerroyale_auth_public_route_table"
+    Name = "${var.projectName}_public_route_table"
   }
 }
 
@@ -138,7 +137,7 @@ resource "aws_default_security_group" "burgerroyale_auth_default_security_group"
   }
 
   tags = {
-    Name = "burgerroyale_auth_default_security_group"
+    Name = "${var.projectName}_default_security_group"
   }
 }
 
