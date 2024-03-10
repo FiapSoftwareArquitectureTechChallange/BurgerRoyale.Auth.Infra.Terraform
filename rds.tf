@@ -1,8 +1,8 @@
 resource "aws_db_subnet_group" "burgerroyale_auth_db_subnet_group" {
-  # name = "${var.projectName}-db-subnet-group"
-  # tags = {
-  #   Name = "${var.projectName}-db-subnet-group"
-  # }
+  name = "${var.projectName}-db-subnet-group"
+  tags = {
+    Name = "${var.projectName}-db-subnet-group"
+  }
   subnet_ids = [
     aws_subnet.burgerroyale_auth_public_subnet_1.id,
     aws_subnet.burgerroyale_auth_public_subnet_2.id
