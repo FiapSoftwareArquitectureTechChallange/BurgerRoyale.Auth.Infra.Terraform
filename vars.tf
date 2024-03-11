@@ -6,10 +6,6 @@ variable "regionDefault" {
   default = "us-east-1"
 }
 
-# variable "myIp" {
-#   description = "Inform your IP address"
-# }
-
 variable "dbName" {
   default = "BurgerRoyaleAuthDb"
 }
