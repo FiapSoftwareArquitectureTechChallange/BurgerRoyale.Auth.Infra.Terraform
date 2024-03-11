@@ -39,4 +39,4 @@ jobs:
       run: |
         echo `pwd`    
         echo "** Running Terraform Plan**"
-        terraform plan -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecretKey=${{ secrets.JWT_SECRET_KEY }}"
+        terraform plan -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
