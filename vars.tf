@@ -33,3 +33,7 @@ variable "jwtSecret" {
 variable "functionName" {
   default = "burgerroyaleauth-lambda"
 }
+
+variable "bucketName" {
+  default = "burgerroyale-auth-s3-bucket"
+}

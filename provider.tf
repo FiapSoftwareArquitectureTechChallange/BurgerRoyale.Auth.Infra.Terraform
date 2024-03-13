@@ -1,4 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "burgerroyale-auth-s3-bucket"
+    key = "state/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 provider "aws" {
-  profile = "default"
   region  = var.regionDefault
 }
