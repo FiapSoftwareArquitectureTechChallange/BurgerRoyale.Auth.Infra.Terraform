@@ -5,14 +5,14 @@ terraform {
       version = "~> 5.0"
     }
   }
-  
+
   backend "s3" {
     bucket = "burgerroyale-auth-s3-bucket"
-    key = "state/terraform.tfstate"
+    key    = "state/terraform.tfstate"
     region = "us-east-1"
   }
 }
 
 provider "aws" {
-  region  = var.regionDefault
+  region = var.regionDefault
 }
