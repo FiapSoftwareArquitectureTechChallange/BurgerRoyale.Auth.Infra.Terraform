@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ main, develop ]
   workflow_dispatch:
-    inputs:
-      applyOnlyEcr:
-        type: boolean
-        description: Apply only ECR
 
 jobs:
   validation:
@@ -17,33 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout tf code in runner environment
-      uses: actions/checkout@v3.5.2
-
-    - name: Configure AWS Credentials Action For GitHub Actions
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-       aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-       aws-region: us-east-1
-
-    - name: Setup Terraform CLI
-      uses: hashicorp/setup-terraform@v2.0.2
-
-    - name: Terraform init
-      run: terraform init
+    - name: Setup Terraform
+      uses: actions/setup-terraform-step@v1
       
     - name: Terraform validate
       run: terraform validate
-        
-    - name: Terraform plan ECR
-      if: github.event.inputs.applyOnlyEcr == 'true'
-      run: |     
-        terraform plan --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
 
     - name: Terraform plan
-      if: github.event.inputs.applyOnlyEcr == 'false'
       run: |     
         terraform plan -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
 
@@ -54,29 +30,9 @@ jobs:
     needs: validation
     
     steps:
-    - name: Checkout tf code in runner environment
-      uses: actions/checkout@v3.5.2
-
-    - name: Configure AWS Credentials Action For GitHub Actions
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-       aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-       aws-region: us-east-1
-
-    - name: Setup Terraform CLI
-      uses: hashicorp/setup-terraform@v2.0.2
-
-    - name: Terraform init
-      run: terraform init
-
-    - name: Terraform apply ECR
-      if: github.event.inputs.applyOnlyEcr == 'true'
-      run: |     
-        terraform apply --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
+    - name: Setup Terraform
+      uses: actions/setup-terraform-step@v1
 
     - name: Terraform apply
-      if: github.event.inputs.applyOnlyEcr == 'false'
       run: |     
         terraform apply -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"

@@ -1,0 +1,34 @@
+name: Terraform AWS Workflow - ECR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validation:
+    name: Terraform Validate and Plan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Setup Terraform
+      uses: actions/setup-terraform-step@v1
+      
+    - name: Terraform validate
+      run: terraform validate
+        
+    - name: Terraform plan ECR
+      run: |     
+        terraform plan --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
+
+  apply:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    needs: validation
+    
+    steps:
+    - name: Setup Terraform
+      uses: actions/setup-terraform-step@v1
+
+    - name: Terraform apply ECR
+      run: |     
+        terraform apply --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
