@@ -1,6 +1,14 @@
-name: Terraform AWS - Apply ECR
+name: Terraform AWS - Lambda
 
 on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
@@ -28,13 +36,14 @@ jobs:
       
     - name: Terraform validate
       run: terraform validate
-        
-    - name: Terraform plan ECR
+
+    - name: Terraform plan
       run: |     
-        terraform plan --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
+        terraform plan -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
 
   apply:
     name: Terraform Apply
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     needs: validation
     
@@ -56,6 +65,6 @@ jobs:
     - name: Terraform init
       run: terraform init
 
-    - name: Terraform apply ECR
+    - name: Terraform apply
       run: |     
-        terraform apply --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
+        terraform apply -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
