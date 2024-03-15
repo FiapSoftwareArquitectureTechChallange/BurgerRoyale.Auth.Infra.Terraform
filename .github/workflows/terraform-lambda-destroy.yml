@@ -1,13 +1,11 @@
-name: Terraform AWS - Validate and Plan
+name: Terraform AWS - Lambda - Destroy
 
 on:
-  pull_request:
-    branches: [ main, develop ]
-  workflow_call:
+  workflow_dispatch:
 
 jobs:
-  validation:
-    name: Terraform Validate and Plan
+  destroy:
+    name: Terraform Destroy
     runs-on: ubuntu-latest
     
     steps:
@@ -27,10 +25,7 @@ jobs:
 
     - name: Terraform init
       run: terraform init
-      
-    - name: Terraform validate
-      run: terraform validate
 
-    - name: Terraform plan
+    - name: Terraform destroy
       run: |     
-        terraform plan -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
+        terraform destroy -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
