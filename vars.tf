@@ -1,5 +1,9 @@
-variable "projectName" {
+variable "burgerRoyaleAuth" {
   default = "burgerroyaleauth"
+}
+
+variable "burgerRoyale" {
+  default = "burgerroyale"
 }
 
 variable "regionDefault" {
@@ -32,8 +36,4 @@ variable "jwtSecret" {
 
 variable "functionName" {
   default = "burgerroyaleauth-lambda"
-}
-
-variable "bucketName" {
-  default = "burgerroyale-auth-s3-bucket"
 }

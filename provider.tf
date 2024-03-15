@@ -7,8 +7,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "burgerroyale-auth-s3-bucket"
-    key    = "state/terraform.tfstate"
+    bucket = "burgerroyale-s3-bucket"
+    key    = "burgerroyale-auth.tfstate"
     region = "us-east-1"
   }
 }
