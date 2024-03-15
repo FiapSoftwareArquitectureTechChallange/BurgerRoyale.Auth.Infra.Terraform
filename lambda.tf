@@ -7,7 +7,7 @@ resource "aws_lambda_function" "burgerroyale_auth_lambda_function" {
 
   environment {
     variables = {
-      "ConnectionStrings__DefaultConnection" = "Server=${aws_db_instance.burgerroyale_auth_db_mssql.address},1433;Database=${var.dbName};User Id=${var.dbUserName};TrustServerCertificate=True;Password='${var.dbPassword}';Connection Timeout=30;"
+      "ConnectionStrings__DefaultConnection" = "Server=${data.aws_db_instance.database.address},1433;Database=${var.dbName};User Id=${var.dbUserName};TrustServerCertificate=True;Password='${var.dbPassword}';Connection Timeout=30;"
       "Jwt__Issuer"                          = var.jwtIssuer
       "Jwt__Audience"                        = var.jwtIssuer
       "Jwt__SecretKey"                       = var.jwtSecret
@@ -16,11 +16,11 @@ resource "aws_lambda_function" "burgerroyale_auth_lambda_function" {
 
   vpc_config {
     subnet_ids = [
-      aws_subnet.burgerroyale_auth_private_subnet_1.id,
-      aws_subnet.burgerroyale_auth_private_subnet_2.id
+      data.aws_subnet.private_subnet_1.id,
+      data.aws_subnet.private_subnet_2.id
     ]
     security_group_ids = [
-      aws_default_security_group.burgerroyale_auth_default_security_group.id
+      data.aws_security_group.default_security_group.id
     ]
   }
 }
