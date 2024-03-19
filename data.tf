@@ -1,5 +1,5 @@
 data "aws_iam_role" "iam_role" {
-  name = ${var.roleName}
+  name = var.roleName
 }
 
 data "aws_db_instance" "database" {
