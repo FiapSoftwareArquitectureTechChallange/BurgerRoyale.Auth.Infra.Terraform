@@ -10,6 +10,10 @@ variable "regionDefault" {
   default = "us-east-1"
 }
 
+variable "roleName" {
+  description = "Inform role name"
+}
+
 variable "dbName" {
   default = "BurgerRoyaleAuthDb"
 }
