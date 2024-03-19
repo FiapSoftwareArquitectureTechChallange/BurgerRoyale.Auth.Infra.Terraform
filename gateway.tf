@@ -30,3 +30,7 @@ resource "aws_lambda_permission" "aws_lambda_api_gateway_permission" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.burgerroyale_auth_api_gateway.execution_arn}/*/*"
 }
+
+output "aws_apigateway_url" {
+  value = aws_apigatewayv2_api.burgerroyale_auth_api_gateway.api_endpoint
+}
