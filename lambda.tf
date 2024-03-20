@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "burgerroyale_auth_lambda_function" {
   function_name = var.functionName
   role          = data.aws_iam_role.iam_role.arn
-  timeout       = 300
+  timeout       = 360
   image_uri     = "${aws_ecr_repository.burgerroyale_auth_ecr_repository.repository_url}:latest"
   package_type  = "Image"
 
