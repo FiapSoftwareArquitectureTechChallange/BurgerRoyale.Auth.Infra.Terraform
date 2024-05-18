@@ -19,3 +19,5 @@ data "aws_security_group" "default_security_group" {
     Name = "${var.burgerRoyale}_default_security_group"
   }
 }
+
+data "aws_caller_identity" "current" {}
