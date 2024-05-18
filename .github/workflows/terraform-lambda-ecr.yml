@@ -37,7 +37,7 @@ jobs:
         
     - name: Terraform plan ECR
       run: |     
-        terraform plan --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}" -var="roleName=${{ vars.ROLE_NAME }}"
+        terraform plan --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
 
   apply:
     name: Terraform Apply
@@ -70,4 +70,4 @@ jobs:
 
     - name: Terraform apply ECR
       run: |     
-        terraform apply --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}" -var="roleName=${{ vars.ROLE_NAME }}"
+        terraform apply --target=aws_ecr_repository.burgerroyale_auth_ecr_repository -auto-approve -var="dbUserName=${{ secrets.DB_USER }}" -var="dbPassword=${{ secrets.DB_PASSWORD }}" -var="jwtIssuer=${{ secrets.JWT_ISSUER }}" -var="jwtAudience=${{ secrets.JWT_AUDIENCE }}" -var="jwtSecret=${{ secrets.JWT_SECRET_KEY }}"
