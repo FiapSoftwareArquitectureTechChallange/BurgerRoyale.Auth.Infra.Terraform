@@ -10,8 +10,9 @@ variable "regionDefault" {
   default = "us-east-1"
 }
 
-variable "roleName" {
-  description = "Inform role name"
+variable "LabRoleName" {
+  description = "Name for the LabRole IAM role"
+  default     = "LabRole"
 }
 
 variable "dbName" {

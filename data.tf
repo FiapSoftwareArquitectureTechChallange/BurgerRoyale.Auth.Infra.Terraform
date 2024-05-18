@@ -1,7 +1,3 @@
-data "aws_iam_role" "iam_role" {
-  name = var.roleName
-}
-
 data "aws_db_instance" "database" {
   db_instance_identifier = "${var.burgerRoyale}-db-mssql"
 }
